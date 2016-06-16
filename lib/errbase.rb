@@ -1,4 +1,4 @@
-require "errbase/version"
+require 'errbase/version'
 
 module Errbase
   class << self
@@ -34,6 +34,8 @@ module Errbase
           Opbeat.capture_exception(e)
         end
       end
+
+      NewRelic::Agent.notice_error(e) if defined?(NewRelic::Agent)
 
       Raven.capture_exception(e, extra: info) if defined?(Raven)
 
